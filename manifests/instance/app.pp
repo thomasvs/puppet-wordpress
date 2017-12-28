@@ -80,9 +80,10 @@ define wordpress::instance::app (
   }
   -> exec { "Extract wordpress ${install_dir}":
     command => "tar zxvf ./${install_file_name} --strip-components=1",
-    creates => "${install_dir}/index.php",
+    # creates => "${install_dir}/index.php",
     user    => $wp_owner,
     group   => $wp_group,
+    refreshonly => true,
   }
   ~> exec { "Change ownership ${install_dir}":
     command     => "chown -R ${wp_owner}:${wp_group} ${install_dir}",
